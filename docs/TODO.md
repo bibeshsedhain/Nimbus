@@ -2,20 +2,20 @@
 
 # Setup
 - [x] Create monorepo structure
-- [ ] Setup GitHub repository
-- [ ] Setup Python virtual environment
+- [x] Setup GitHub repository
+- [x] Setup Python virtual environment
 - [ ] Install Docker
-- [ ] Install PostgreSQL
-- [ ] Install Redis
+- [x] Install PostgreSQL (docker-compose)
+- [x] Install Redis (docker-compose)
 
 ---
 
 # Backend
-- [ ] Setup FastAPI project
-- [ ] Create deployment endpoint
-- [ ] Create execution endpoint
-- [ ] Add execution logging
-- [ ] Add database integration
+- [x] Setup FastAPI project
+- [x] Create deployment endpoint
+- [x] Create execution endpoint
+- [x] Add execution logging
+- [x] Add database integration
 
 ---
 
@@ -30,8 +30,8 @@
 
 # Database
 - [ ] Create users table
-- [ ] Create deployments table
-- [ ] Create executions table
+- [x] Create deployments table
+- [x] Create executions table
 
 ---
 

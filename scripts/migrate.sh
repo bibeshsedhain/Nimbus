@@ -21,8 +21,4 @@ if [[ -f "$ROOT/.env" ]]; then
   set +a
 fi
 
-export NIMBUS_WORKSPACE_DIR="${NIMBUS_WORKSPACE_DIR:-/tmp/nimbus/functions}"
-
 alembic upgrade head
-
-exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload

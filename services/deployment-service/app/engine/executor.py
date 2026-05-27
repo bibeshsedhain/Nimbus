@@ -13,7 +13,13 @@ from app.engine.dockerfile import write_build_context
 
 class DockerExecutor:
     def __init__(self) -> None:
-        self.client = docker.from_env()
+        self._client: docker.DockerClient | None = None
+
+    @property
+    def client(self) -> docker.DockerClient:
+        if self._client is None:
+            self._client = docker.from_env()
+        return self._client
 
     def build_image(self, work_dir: Path, function_id: str) -> str:
         image_tag = f"nimbus-fn-{function_id[:8]}:{uuid.uuid4().hex[:12]}"
@@ -108,5 +114,15 @@ class DockerExecutor:
         try:
             self.client.ping()
             return True
-        except DockerException:
+        except (DockerException, OSError):
             return False
+
+
+_executor: DockerExecutor | None = None
+
+
+def get_executor() -> DockerExecutor:
+    global _executor
+    if _executor is None:
+        _executor = DockerExecutor()
+    return _executor

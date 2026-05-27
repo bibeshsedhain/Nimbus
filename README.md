@@ -152,3 +152,31 @@ nimbus/
 │
 └── scripts/
 ```
+
+---
+
+# Local Development
+
+## Prerequisites
+
+- Docker Desktop (running)
+- Python 3.12+
+- Node.js 18+ (for dashboard)
+
+## Quick start
+
+```bash
+cp .env.example .env
+docker compose up -d postgres redis
+./scripts/migrate.sh
+./scripts/run-deployment-service.sh
+```
+
+In another terminal:
+
+```bash
+cp frontend/.env.example frontend/.env   # or use root .env via run-frontend.sh
+./scripts/run-frontend.sh
+```
+
+Open http://localhost:5173

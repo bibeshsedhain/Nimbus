@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: nimbus
+      POSTGRES_PASSWORD: nimbus
+      POSTGRES_DB: nimbus
+    ports:
+      - "5432:5432"
+    volumes:
+      - nimbus_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nimbus -d nimbus"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build:
+      context: ./services/deployment-service
+    ports:
+      - "8000:8000"
+    environment:
+      NIMBUS_API_KEY: ${NIMBUS_API_KEY:-dev-secret-key}
+      NIMBUS_DATABASE_URL: postgresql+psycopg2://nimbus:nimbus@postgres:5432/nimbus
+      NIMBUS_REDIS_URL: redis://redis:6379/0
+      NIMBUS_WORKSPACE_DIR: /tmp/nimbus/functions
+      NIMBUS_CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - nimbus_workspace:/tmp/nimbus/functions
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  nimbus_pg:
+  nimbus_workspace:

@@ -12,8 +12,13 @@ class FunctionWorkspace:
         self.base_dir = base_dir or settings.workspace_dir
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
-    def create(self, source_code: str, filename: str = "function.py") -> str:
-        function_id = str(uuid.uuid4())
+    def create(
+        self,
+        source_code: str,
+        filename: str = "function.py",
+        function_id: str | None = None,
+    ) -> str:
+        function_id = function_id or str(uuid.uuid4())
         work_dir = self.base_dir / function_id
         work_dir.mkdir(parents=True, exist_ok=False)
 

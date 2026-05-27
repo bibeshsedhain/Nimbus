@@ -4,3 +4,6 @@ python-multipart>=0.0.12
 pydantic>=2.9.0
 pydantic-settings>=2.6.0
 docker>=7.1.0
+sqlalchemy>=2.0.36
+psycopg2-binary>=2.9.10
+alembic>=1.14.0
